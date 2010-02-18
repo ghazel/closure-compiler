@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
                          '--exclude'  << 'test' <<
                          '--all'
 
-  s.add_dependency 'POpen4', ['>= 0.1.4']
+  s.add_dependency 'ghazel-POpen4', ['>= 0.1.4.1']
 
   s.files = Dir['lib/**/*', 'vendor/**/*', 'closure-compiler.gemspec', 'README.textile', 'LICENSE', 'COPYING']
 

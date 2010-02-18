@@ -32,9 +32,15 @@ module Closure
           stdin.write(io.to_s)
         end
         stdin.close
-        out_thread = Thread.new { result = stdout.read }
-        err_thread = Thread.new { error  = stderr.read }
-        out_thread.join and err_thread.join
+        if RUBY_PLATFORM =~ /mswin32/
+          stderr.close
+          result = stdout.read
+          error  = "unknown"
+        else
+          out_thread = Thread.new { result = stdout.read }
+          err_thread = Thread.new { error  = stderr.read }
+          out_thread.join and err_thread.join
+        end
         yield(StringIO.new(result)) if block_given?
       end
       raise Error, error unless status.success?
